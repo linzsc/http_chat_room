@@ -9,7 +9,7 @@ enum class MessageType {
     UserJoin,       // 用户加入
     UserExit        // 用户退出
 };
-
+/*
 
 struct Message {
 
@@ -91,3 +91,4 @@ private:
     std::string content;   // 消息内容
     std::string timestamp; // 时间戳
 };
+*/

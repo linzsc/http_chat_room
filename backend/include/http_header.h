@@ -217,7 +217,7 @@ public:
         response_stream<< "Sec-WebSocket-Accept: "<<Key<<"\r\n";
         
         response_stream << "\r\n"<<body;
-        LOG_INFO("createHttpRequestResponse_1:\n"+response_stream.str());
+        //LOG_INFO("createHttpRequestResponse_1:\n"+response_stream.str());
         return response_stream.str();
     }
     /*

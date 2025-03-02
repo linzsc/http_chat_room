@@ -1,7 +1,7 @@
 CMakeFiles/server.dir/backend/src/sha1.cpp.o: \
- /home/linz/code/c++/http_chat_room/backend/src/sha1.cpp \
+ /home/linz/project/http_chat_room/backend/src/sha1.cpp \
  /usr/include/stdc-predef.h \
- /home/linz/code/c++/http_chat_room/backend/include/sha1.h \
+ /home/linz/project/http_chat_room/backend/include/sha1.h \
  /usr/include/c++/13/string /usr/include/c++/13/bits/requires_hosted.h \
  /usr/include/x86_64-linux-gnu/c++/13/bits/c++config.h \
  /usr/include/x86_64-linux-gnu/c++/13/bits/os_defines.h \

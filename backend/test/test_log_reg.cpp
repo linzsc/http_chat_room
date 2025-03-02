@@ -28,6 +28,14 @@ int main() {
         //return 1;
     }
     
+    //测试获取消息
+    MessageDAO messageDAO;
+    std::vector<Message> messages = messageDAO.getpastMessages(1);
+
+    for(auto &m: messages){
+        std::string msg=m.MsgtoJsonManual();
+        std::cout<<msg<<std::endl;
+    }
     return 0;
 }
 //g++ -std=c++11 -o test_log_reg test_log_reg.cpp ../utils/database.cpp ../utils/logger.cpp -I ../include/ -lmysqlclient -lstdc++fs

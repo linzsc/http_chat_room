@@ -1,5 +1,5 @@
 CMakeFiles/server.dir/backend/src/base64.cpp.o: \
- /home/linz/code/c++/http_chat_room/backend/src/base64.cpp \
+ /home/linz/project/http_chat_room/backend/src/base64.cpp \
  /usr/include/stdc-predef.h /usr/include/string.h \
  /usr/include/x86_64-linux-gnu/bits/libc-header-start.h \
  /usr/include/features.h /usr/include/features-time64.h \
@@ -13,4 +13,4 @@ CMakeFiles/server.dir/backend/src/base64.cpp.o: \
  /usr/include/x86_64-linux-gnu/bits/types/locale_t.h \
  /usr/include/x86_64-linux-gnu/bits/types/__locale_t.h \
  /usr/include/strings.h \
- /home/linz/code/c++/http_chat_room/backend/include/base64.h
+ /home/linz/project/http_chat_room/backend/include/base64.h

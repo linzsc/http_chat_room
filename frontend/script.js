@@ -2,15 +2,17 @@ let websocket;
 let isConnected = false;
 const CHAT_SERVER_URL = 'ws://127.0.0.1:12345';
 
-let clinet_name;
-let client_password;
+let user_name;
+let user_id;
+let user_password;
+let logined = false;
 
 // 发送HTTP请求
 function sendHttpRequest(method, path, data) {
     return fetch(`http://127.0.0.1:12345${path}`, {
         method,
         headers: {
-            'Content-Type': 'application/json',
+            'Content-Type': 'a ',
         },
         body: JSON.stringify(data),
     });
@@ -34,6 +36,11 @@ async function registerUser() {
     }
     console.log(result);
 }
+async function getHistoryMessage() {
+    const response = await sendHttpRequest('POST', '/getmessage',{user_id});
+    const result = await response.json();
+    result.messages.forEach(message => {receiveMessage(message)});
+}
 
 // 用户登录
 async function loginUser() {
@@ -48,14 +55,22 @@ async function loginUser() {
     const result = await response.json();
     console.log(result);
     if (result.success) {
+        user_id=result.userId;
+        user_name = username;
+        user_password = password;
         //提示用户登录成功
         alert('登录成功');
+        logined = true;
+
         // 登录成功，显示聊天框
         document.getElementById('authForm').classList.add('hidden');
         document.getElementById('chatBox').classList.remove('hidden');
 
-        clinet_name = username;
-        client_password = password;
+
+
+        //获取历史消息记录
+        //getHistoryMessage();
+
         setTimeout(() => {
             connectWebSocket();
         }, 500);
@@ -68,6 +83,10 @@ async function loginUser() {
 
 // 发送消息
 function sendMessage() {
+    if(!logined) {
+       alert("login first");
+       return; 
+    }
     const messageInput = document.getElementById('messageInput');
     const message = messageInput.value;
 
@@ -76,7 +95,8 @@ function sendMessage() {
     // 创建消息对象
     const msg = {
         type: '1', // 消息类型，GroupChat：1,可以扩展为 'PrivateChat':2
-        sender: clinet_name, // 发送者用户名，确保 username 已定义
+        sender_name:user_name, // 发送者用户名，确保 username 已定义
+        sender_id:user_id,
         content: message,
         timestamp: Date.now()
     };
@@ -112,11 +132,15 @@ function startHeartbeat() {
 
 // 接收消息
 function receiveMessage(data) {
+    console.log("收到消息:", data);
     const messageList = document.getElementById('messageList');
     const li = document.createElement('li');
-    li.textContent = `[${new Date(data.timestamp)}] ${data.sender}: ${data.content}`;
+    //li.textContent = `[${new Date(data.timestamp)}] ${data.sender}: ${data.content}`;
+    //console.log(data.sender_name);
+    li.textContent = `${data.sender_name}: ${data.content}`;
     messageList.appendChild(li);
 }
+
 
 // WebSocket连接
 function connectWebSocket() {

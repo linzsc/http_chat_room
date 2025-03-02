@@ -8,11 +8,11 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "/home/linz/code/c++/http_chat_room/backend/src/base64.cpp" "CMakeFiles/server.dir/backend/src/base64.cpp.o" "gcc" "CMakeFiles/server.dir/backend/src/base64.cpp.o.d"
-  "/home/linz/code/c++/http_chat_room/backend/src/server.cpp" "CMakeFiles/server.dir/backend/src/server.cpp.o" "gcc" "CMakeFiles/server.dir/backend/src/server.cpp.o.d"
-  "/home/linz/code/c++/http_chat_room/backend/src/sha1.cpp" "CMakeFiles/server.dir/backend/src/sha1.cpp.o" "gcc" "CMakeFiles/server.dir/backend/src/sha1.cpp.o.d"
-  "/home/linz/code/c++/http_chat_room/backend/utils/database.cpp" "CMakeFiles/server.dir/backend/utils/database.cpp.o" "gcc" "CMakeFiles/server.dir/backend/utils/database.cpp.o.d"
-  "/home/linz/code/c++/http_chat_room/backend/utils/logger.cpp" "CMakeFiles/server.dir/backend/utils/logger.cpp.o" "gcc" "CMakeFiles/server.dir/backend/utils/logger.cpp.o.d"
+  "/home/linz/project/http_chat_room/backend/src/base64.cpp" "CMakeFiles/server.dir/backend/src/base64.cpp.o" "gcc" "CMakeFiles/server.dir/backend/src/base64.cpp.o.d"
+  "/home/linz/project/http_chat_room/backend/src/server.cpp" "CMakeFiles/server.dir/backend/src/server.cpp.o" "gcc" "CMakeFiles/server.dir/backend/src/server.cpp.o.d"
+  "/home/linz/project/http_chat_room/backend/src/sha1.cpp" "CMakeFiles/server.dir/backend/src/sha1.cpp.o" "gcc" "CMakeFiles/server.dir/backend/src/sha1.cpp.o.d"
+  "/home/linz/project/http_chat_room/backend/utils/database.cpp" "CMakeFiles/server.dir/backend/utils/database.cpp.o" "gcc" "CMakeFiles/server.dir/backend/utils/database.cpp.o.d"
+  "/home/linz/project/http_chat_room/backend/utils/logger.cpp" "CMakeFiles/server.dir/backend/utils/logger.cpp.o" "gcc" "CMakeFiles/server.dir/backend/utils/logger.cpp.o.d"
   )
 
 # Targets to which this target links which contain Fortran sources.

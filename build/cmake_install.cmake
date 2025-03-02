@@ -1,4 +1,4 @@
-# Install script for directory: /home/linz/code/c++/http_chat_room
+# Install script for directory: /home/linz/project/http_chat_room
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -50,5 +50,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/home/linz/code/c++/http_chat_room/build/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/home/linz/project/http_chat_room/build/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

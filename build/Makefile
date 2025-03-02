@@ -57,10 +57,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/linz/code/c++/http_chat_room
+CMAKE_SOURCE_DIR = /home/linz/project/http_chat_room
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/linz/code/c++/http_chat_room/build
+CMAKE_BINARY_DIR = /home/linz/project/http_chat_room/build
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -87,9 +87,9 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/linz/code/c++/http_chat_room/build/CMakeFiles /home/linz/code/c++/http_chat_room/build//CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/linz/project/http_chat_room/build/CMakeFiles /home/linz/project/http_chat_room/build//CMakeFiles/progress.marks
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/linz/code/c++/http_chat_room/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/linz/project/http_chat_room/build/CMakeFiles 0
 .PHONY : all
 
 # The main clean target

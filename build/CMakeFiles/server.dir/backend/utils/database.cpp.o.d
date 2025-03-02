@@ -1,7 +1,7 @@
 CMakeFiles/server.dir/backend/utils/database.cpp.o: \
- /home/linz/code/c++/http_chat_room/backend/utils/database.cpp \
+ /home/linz/project/http_chat_room/backend/utils/database.cpp \
  /usr/include/stdc-predef.h \
- /home/linz/code/c++/http_chat_room/backend/include/database.h \
+ /home/linz/project/http_chat_room/backend/include/database.h \
  /usr/include/mysql/mysql.h \
  /usr/lib/gcc/x86_64-linux-gnu/13/include/stdbool.h \
  /usr/lib/gcc/x86_64-linux-gnu/13/include/stddef.h \
@@ -149,7 +149,7 @@ CMakeFiles/server.dir/backend/utils/database.cpp.o: \
  /usr/include/c++/13/ext/aligned_buffer.h \
  /usr/include/c++/13/ext/concurrence.h \
  /usr/include/c++/13/bits/cxxabi_forced.h \
- /home/linz/code/c++/http_chat_room/backend/include/logger.h \
+ /home/linz/project/http_chat_room/backend/include/logger.h \
  /usr/include/c++/13/iostream /usr/include/c++/13/ostream \
  /usr/include/c++/13/ios /usr/include/c++/13/bits/char_traits.h \
  /usr/include/c++/13/bits/localefwd.h \

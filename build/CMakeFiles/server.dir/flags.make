@@ -4,7 +4,7 @@
 # compile CXX with /usr/bin/c++
 CXX_DEFINES = 
 
-CXX_INCLUDES = -I/home/linz/code/c++/http_chat_room/backend/include
+CXX_INCLUDES = -I/home/linz/project/http_chat_room/backend/include
 
 CXX_FLAGS = -std=gnu++11
 

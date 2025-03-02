@@ -5,6 +5,7 @@
 #include "sha1.h"
 #include "logger.h"
 #include <set>
+#include <mutex>
 /*
 前端先发送 注册、登录http请求，
 但后端核实身份信息后，返回成功的响应
@@ -21,6 +22,9 @@
 // 定义回调函数类型
 
 std::set<int>online_members;
+std::mutex context_mutex; // 全局互斥锁
+
+EpollReactor server;
 
 // 定义客户端上下文
 struct ClientContext {
@@ -32,16 +36,34 @@ struct ClientContext {
     ClientContext() : buffer_pos(0), is_websocket(false) {}
 };
 std::unordered_map<int, ClientContext> client_contexts;
-
+/*
 void closeConnection(int fd) {
     LOG_INFO("Closing connection: " + std::to_string(fd));
     close(fd);
     client_contexts.erase(fd); // 从上下文集合中移除
+    if(online_members.find(fd)!=online_members.end()){
+        online_members.erase(fd);
+    }
+}
+*/
+
+void closeConnection(int fd) {
+    std::lock_guard<std::mutex> lock(context_mutex);
+    if (client_contexts.find(fd) == client_contexts.end()) {
+        return; // 已关闭，避免重复操作
+    }
+    client_contexts.erase(fd);
+    online_members.erase(fd);
+    //server.delFd(fd);
+    if (close(fd) == -1 && errno != EBADF) {
+        LOG_ERROR("Close error: " + std::string(strerror(errno)));
+    }
+    LOG_INFO("Closing connection: " + std::to_string(fd));
 }
 
 // Epoll Reactor 服务器
 
-EpollReactor server;
+
 
 // 全局变量
 
@@ -49,6 +71,7 @@ EpollReactor server;
 // 发送 HTTP 响应
 void sendHttpResponse(int fd, HttpStatus status_code,const std::map<std::string, std::string> &headers, const std::string& body) {
     std::string response = HttpParser::createHttpRequestResponse(status_code, body,headers);
+    //LOG_INFO("Sending HTTP response: \n" + response);
     //std::cout << "Sending HTTP response: \n" << response << std::endl<<">>><<<<\n";
     send(fd, response.c_str(), response.length(), 0);
 }
@@ -113,7 +136,8 @@ void user_login(int fd, std::string ctx_body)
 
         LOG_INFO("Login successful. User name: "+username);
         std::map<std::string, std::string> extraHeaders = {{"Content-Type", "application/json"}};
-        sendHttpResponse(fd,  HttpStatus::OK, extraHeaders, "{\"success\": true, \"message\": \"Login successful\"}");
+        //sendHttpResponse(fd,  HttpStatus::OK, extraHeaders, "{\"success\": true, \"message\": \"Login successful\", "user id: “+“userId"}");
+        sendHttpResponse(fd, HttpStatus::OK, extraHeaders, "{\"success\": true, \"message\": \"Login successful\", \"userId\": \"" + std::to_string(userId) + "\"}");
     } else {
         std::cerr << "Login failed." << std::endl;
         LOG_ERROR("Login failed. User name:"+username);
@@ -176,11 +200,43 @@ void senWebSocketMessage(int fd, std::string &payload) {
     std::cout << "Sending WebSocket frame with length: " << frame_len << std::endl;
     send(fd, frame, frame_len, 0);
 }
+
+
+void parse_msg(std::string message){
+    SimpleJSONParser msg(message);
+    /*前端消息格式
+
+        sender: clinet_name, // 发送者用户名，确保 username 已定义
+        content: message,
+        timestamp: Date.now()
+    };
+    */
+    std::map<std::string, std::string> msg_map=msg.parse();
+    //将消息保存到数据库
+    MessageDAO messageDAO;
+    if(messageDAO.saveMessage(msg_map["sender_id"], msg_map["sender_name"], msg_map["content"])){
+        LOG_INFO("Message saved to database successfully.");
+    }
+    else{
+        LOG_ERROR("Failed to save message to database.");
+    }
+
+}
 //广播消息
 void handleWebSocketMessage(int fd, std::string message) {
+
+
     //std::cout << "Received WebSocket message: " << message << std::endl;
     LOG_INFO("Received WebSocket message: "+message);
     // 广播消息
+
+    //解析数据，并保存到数据库
+    
+    //解析消息
+    parse_msg(message);
+    
+
+
     for (auto it = online_members.begin(); it != online_members.end(); ++it) {
         int client_fd = *it;
         //if (client_fd != fd) {
@@ -264,7 +320,7 @@ char *compute_sec_websocket_accept(const char *sec_websocket_key) {
     // 计算 SHA-1 哈希
     unsigned char hash[20];
     SHA1::SHA1HashBytes((const unsigned char *)key_with_guid, strlen(key_with_guid), hash);
-    std::cout<<"SHA1 hash: "<<hash<<std::endl;
+    //std::cout<<"SHA1 hash: "<<hash<<std::endl;
     // 编码为 Base64
     char encoded[100];  // Base64 编码后的字符串长度会增加
     Base64encode(encoded, (const char *)hash, 20);
@@ -281,11 +337,36 @@ void handleAuthRequest(int fd, const std::string& path, HttpMethod method, const
         user_register(fd, body);
     }
 }
+
+void handleMessageRequest(int fd,HttpMethod method, const std::string& body) {
+    if (method == HttpMethod::OPTIONS) {
+        handle_options_request(fd);
+        return;
+    }
+    MessageDAO msgDao;
+    std::vector<Message> msg=msgDao.getpastMessages(fd);
+    if(msg.empty()){
+        LOG_ERROR("No message found");
+        return;
+    }
+    std::string messageJson="{\"messages\": [";
+    for(auto &m:msg){
+        
+        std::string message=m.MsgtoJsonManual();
+        messageJson+=message+",";
+        
+        //LOG_INFO("GET message: "+message);
+        //senWebSocketMessage(fd,message);
+    }
+    messageJson=messageJson.substr(0,messageJson.size()-1);
+    messageJson+="]}";
+    sendHttpResponse(fd,HttpStatus::OK , {}, messageJson);
+}
 void onHttp_request(int fd, std::string message) {
     ClientContext &ctx = client_contexts[fd];
     size_t end_header = message.find("\r\n\r\n");
     //LOG_INFO("Working on HTTP request:\n"+message);
-    LOG_DEBUG(std::string(ctx.is_websocket ? "Websocket" : "HTTP") + " request:\n" + message);
+    //LOG_DEBUG(std::string(ctx.is_websocket ? "Websocket" : "HTTP") + " request:\n" + message);
     if (end_header != std::string::npos) {
         std::string header = message.substr(0, end_header);
         //LOG_DEBUG("Header:\n" + header);
@@ -299,7 +380,7 @@ void onHttp_request(int fd, std::string message) {
             HttpMethod method = request.method;
 
             if (request.headers["Upgrade"] == "websocket") {
-                std::cout << "Upgrade request" << std::endl;
+                //std::cout << "Upgrade request" << std::endl;
                 // WebSocket 升级请求
                 std::string key = request.headers["Sec-WebSocket-Key"];
                 std::string sec_websocket_accept = compute_sec_websocket_accept(key.c_str());
@@ -329,6 +410,8 @@ void onHttp_request(int fd, std::string message) {
                 online_members.insert(fd);
             } else if(path == "/register"|| path == "/login"){
                 handleAuthRequest(fd, path, method, body);
+            }else if (path == "/getmessage"){
+                handleMessageRequest(fd,method, body);
             }else{
                 
                 sendHttpResponse(fd,  HttpStatus::OK, {}, "Unauthorized");
@@ -350,11 +433,12 @@ void onHttp_request(int fd, std::string message) {
 
 
 
-\
+
 void handleClientRead(int fd, uint32_t events)
 {
     if (client_contexts.find(fd) == client_contexts.end())
     {
+        LOG_DEBUG("New client connected:"+std::to_string(fd));
         client_contexts[fd] = ClientContext();
     }
 
