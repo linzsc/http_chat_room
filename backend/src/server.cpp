@@ -34,6 +34,13 @@ struct ClientContext {
     bool is_logged_in; // 标识是否已登录
     std::string ws_fragment_buffer;
     ClientContext() : buffer_pos(0), is_websocket(false) {}
+    void print(){
+        LOG_INFO("buffer: " + buffer);
+        LOG_INFO("buffer_pos: " + std::to_string(buffer_pos));
+        LOG_INFO("is_websocket: " + std::to_string(is_websocket));
+        LOG_INFO("is_logged_in: " + std::to_string(is_logged_in));
+        LOG_INFO("ws_fragment_buffer: " + ws_fragment_buffer);
+    }
 };
 std::unordered_map<int, ClientContext> client_contexts;
 /*
@@ -54,26 +61,27 @@ void closeConnection(int fd) {
     }
     client_contexts.erase(fd);
     online_members.erase(fd);
-    //server.delFd(fd);
+    server.delFd(fd);
     if (close(fd) == -1 && errno != EBADF) {
         LOG_ERROR("Close error: " + std::string(strerror(errno)));
     }
     LOG_INFO("Closing connection: " + std::to_string(fd));
 }
 
-// Epoll Reactor 服务器
-
-
-
-// 全局变量
 
 
 // 发送 HTTP 响应
-void sendHttpResponse(int fd, HttpStatus status_code,const std::map<std::string, std::string> &headers, const std::string& body) {
+bool sendHttpResponse(int fd, HttpStatus status_code,const std::map<std::string, std::string> &headers, const std::string& body) {
     std::string response = HttpParser::createHttpRequestResponse(status_code, body,headers);
     //LOG_INFO("Sending HTTP response: \n" + response);
     //std::cout << "Sending HTTP response: \n" << response << std::endl<<">>><<<<\n";
-    send(fd, response.c_str(), response.length(), 0);
+    size_t sent=send(fd, response.c_str(), response.length(), 0);
+    if (sent == -1) {
+        LOG_ERROR("Send failed: " + std::string(strerror(errno)));
+        closeConnection(fd);
+        return false;
+    }
+    return true;
 }
 //
 
@@ -145,8 +153,8 @@ void user_login(int fd, std::string ctx_body)
         sendHttpResponse(fd,  HttpStatus::NOT_FOUND, extraHeaders, "Unauthorized");
     }
     /*
-    // 模拟登录验证
-    if (user_db.find(username) != user_db.end() && user_db[username] == password)
+    // 模拟登录验
+    if (1)
     {
         //用户在数据库内，且登录加入到在线列表中，
         online_name[username] = fd;
@@ -163,6 +171,7 @@ void user_login(int fd, std::string ctx_body)
         sendHttpResponse(fd,  HttpStatus::NOT_FOUND, extraHeaders, "Unauthorized");
     }
         */
+        
 }
 
 void senWebSocketMessage(int fd, std::string &payload) {
@@ -311,7 +320,7 @@ void handleWebSocketFrame(int fd, const std::string& frame) {
     }
 }
 
-char *compute_sec_websocket_accept(const char *sec_websocket_key) {
+std::string compute_sec_websocket_accept(const char *sec_websocket_key) {
     // 创建一个临时缓冲区，用于拼接 Sec-WebSocket-Key 和 GUID
     char key_with_guid[256];
     static const char *ws_guid = "258EAFA5-E914-47DA-95CA-C5AB0DC85B11";
@@ -325,7 +334,7 @@ char *compute_sec_websocket_accept(const char *sec_websocket_key) {
     char encoded[100];  // Base64 编码后的字符串长度会增加
     Base64encode(encoded, (const char *)hash, 20);
 
-    return strdup(encoded);  // 返回动态分配的字符串，调用者负责释放
+    return std::string(encoded);  // 返回动态分配的字符串，调用者负责释放
 }
 
 void handleAuthRequest(int fd, const std::string& path, HttpMethod method, const std::string& body) {
@@ -366,7 +375,7 @@ void onHttp_request(int fd, std::string message) {
     ClientContext &ctx = client_contexts[fd];
     size_t end_header = message.find("\r\n\r\n");
     //LOG_INFO("Working on HTTP request:\n"+message);
-    //LOG_DEBUG(std::string(ctx.is_websocket ? "Websocket" : "HTTP") + " request:\n" + message);
+    LOG_DEBUG(std::string(ctx.is_websocket ? "Websocket" : "HTTP") + " request:\n" + message);
     if (end_header != std::string::npos) {
         std::string header = message.substr(0, end_header);
         //LOG_DEBUG("Header:\n" + header);
@@ -381,13 +390,14 @@ void onHttp_request(int fd, std::string message) {
 
             if (request.headers["Upgrade"] == "websocket") {
                 //std::cout << "Upgrade request" << std::endl;
+                LOG_INFO("Upgrade request");
                 // WebSocket 升级请求
                 std::string key = request.headers["Sec-WebSocket-Key"];
                 std::string sec_websocket_accept = compute_sec_websocket_accept(key.c_str());
                 if (sec_websocket_accept.empty()) {
                     std::cerr << "Failed to compute Sec-WebSocket-Accept" << std::endl;
-                    closeConnection(fd);
-                    //close(fd);
+                    //closeConnection(fd);
+                    close(fd);
                     return;
                 }
 
@@ -402,12 +412,13 @@ void onHttp_request(int fd, std::string message) {
 
                 if (send(fd, response.c_str(), response.size(), 0) == -1) {
                     std::cerr << "Send failed: " << strerror(errno) << std::endl;
-                    //close(fd);
-                    closeConnection(fd);
+                    close(fd);
+                    //closeConnection(fd);
                     return;
                 }
                 ctx.is_websocket = true;
                 online_members.insert(fd);
+                LOG_INFO("WebSocket connection established");
             } else if(path == "/register"|| path == "/login"){
                 handleAuthRequest(fd, path, method, body);
             }else if (path == "/getmessage"){
@@ -419,6 +430,7 @@ void onHttp_request(int fd, std::string message) {
 
             if (request.headers["Connection"] != "keep-alive" && request.headers["Connection"] != "keep-alive, Upgrade"){
                 //close(fd); // 非保持连接，直接关闭 fd
+                LOG_DEBUG("Http update close!");
                 closeConnection(fd);
             } else {
                 server.modFd(fd, EPOLLIN | EPOLLET); // 保持连接，重置 epoll 监听事件
@@ -443,17 +455,20 @@ void handleClientRead(int fd, uint32_t events)
     }
 
     ClientContext &ctx = client_contexts[fd];
+    ctx.print();
     char chunk[4096];
     ssize_t bytesRead;
-
+    LOG_DEBUG("Reading from fd: " + std::to_string(fd));
     while ((bytesRead = read(fd, chunk, sizeof(chunk))) > 0)
     {
+
         ctx.buffer.append(chunk, bytesRead); // 追加数据到缓冲区
-        /*
+        
         std::cout << "FD  : " << fd << "   read data: \n"
+                  << "-----------------" << std::endl
                   << ctx.buffer << std::endl
                   << "-----------------" << std::endl;
-        */
+        
         while (!ctx.buffer.empty())
         {
             if (!ctx.is_websocket)
@@ -478,15 +493,28 @@ void handleClientRead(int fd, uint32_t events)
                 {
                     break; // HTTP 请求数据还未完全到达
                 }
-
+                
                 std::string full_request = ctx.buffer.substr(0, total_size);
                 ctx.buffer.erase(0, total_size); // 清理已处理部分
-                
-                ThreadPool::instance().commit([fd, full_request]() {
+                /*
+                std::lock_guard<std::mutex> lock(context_mutex);
+                if (client_contexts.find(fd) == client_contexts.end()) {
+                    return; // fd已关闭，不提交任务
+                }
+
+                auto ts = std::chrono::steady_clock::now();
+                ThreadPool::instance().commit([fd, full_request,ts]() {
+                    std::lock_guard<std::mutex> lock(context_mutex);
+                    // 二次检查连接有效性及时序
+                    if (client_contexts.find(fd) == client_contexts.end() || 
+                    (std::chrono::steady_clock::now() - ts) > std::chrono::seconds(2)) {
+                        return;
+                    }
                     onHttp_request(fd, full_request);
                 });
-                
-               
+                */
+                LOG_DEBUG(full_request);
+                onHttp_request(fd, full_request);
             }
             else
             {
@@ -500,19 +528,21 @@ void handleClientRead(int fd, uint32_t events)
 
     if (bytesRead == 0)
     {
-        /*
+        
         std::cout << "Client disconnected." << std::endl;
         std::cout << "FD close!!" << fd << std::endl;
         client_contexts.erase(fd);
         close(fd);
-        */
-        closeConnection(fd);
+        
+        //closeConnection(fd);
     }
   
     else if (bytesRead < 0 && errno != EAGAIN && errno != EWOULDBLOCK)
     {
-        std::cerr << "Read error: " << strerror(errno) << std::endl;
+        //std::cerr << "Read error: " << strerror(errno) << std::endl;
         LOG_ERROR("Read error: " + std::string(strerror(errno)));
+
+        LOG_DEBUG("Read bad errpr close!");
         closeConnection(fd);
         
     }

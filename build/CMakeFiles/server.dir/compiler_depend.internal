@@ -20,8 +20,8 @@ CMakeFiles/server.dir/backend/src/base64.cpp.o
  /usr/include/x86_64-linux-gnu/sys/cdefs.h
  /usr/lib/gcc/x86_64-linux-gnu/13/include/stddef.h
 
-CMakeFiles/server.dir/backend/src/server.cpp.o
- /home/linz/project/http_chat_room/backend/src/server.cpp
+CMakeFiles/server.dir/backend/src/server2.cpp.o
+ /home/linz/project/http_chat_room/backend/src/server2.cpp
  /home/linz/project/http_chat_room/backend/include/EpollReactor.h
  /home/linz/project/http_chat_room/backend/include/base64.h
  /home/linz/project/http_chat_room/backend/include/database.h

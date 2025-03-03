@@ -39,6 +39,13 @@ class EpollReactor {
                 std::cerr << "Failed to mod fd: " << strerror(errno) << std::endl;
             }
         }
+        void delFd(int fd) {
+            if (epoll_ctl(epoll_fd, EPOLL_CTL_DEL, fd, nullptr) == -1) {
+                std::cerr << "Failed to del fd: " << strerror(errno) << std::endl;
+            }
+            fd_callbacks.erase(fd);
+            
+        }
         // 事件循环
         void run() {
             struct epoll_event events[MAX_EVENTS];

@@ -22,8 +22,6 @@ typedef void (*CallbackFunction)(int fd, uint32_t events);
 
 // 在线用户列表
 
-std::map<std::string, int>online_name;
-std::map<int,std::string>online_fd;
 std::map<std::string,std::string>Group_member;
 std::unordered_map<std::string, std::string> user_db;
 

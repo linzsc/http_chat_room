@@ -10,7 +10,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED True)
 
 # 添加可执行文件
 add_executable(server
-    backend/src/server.cpp
+    backend/src/server2.cpp
     backend/src/sha1.cpp
     backend/src/base64.cpp
     backend/utils/logger.cpp

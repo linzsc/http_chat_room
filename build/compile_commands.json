@@ -1,0 +1,32 @@
+[
+{
+  "directory": "/home/linz/project/http_chat_room/build",
+  "command": "/usr/bin/g++  -I/home/linz/project/http_chat_room/backend/include -g -std=gnu++11 -o CMakeFiles/server.dir/backend/src/server2.cpp.o -c /home/linz/project/http_chat_room/backend/src/server2.cpp",
+  "file": "/home/linz/project/http_chat_room/backend/src/server2.cpp",
+  "output": "CMakeFiles/server.dir/backend/src/server2.cpp.o"
+},
+{
+  "directory": "/home/linz/project/http_chat_room/build",
+  "command": "/usr/bin/g++  -I/home/linz/project/http_chat_room/backend/include -g -std=gnu++11 -o CMakeFiles/server.dir/backend/src/sha1.cpp.o -c /home/linz/project/http_chat_room/backend/src/sha1.cpp",
+  "file": "/home/linz/project/http_chat_room/backend/src/sha1.cpp",
+  "output": "CMakeFiles/server.dir/backend/src/sha1.cpp.o"
+},
+{
+  "directory": "/home/linz/project/http_chat_room/build",
+  "command": "/usr/bin/g++  -I/home/linz/project/http_chat_room/backend/include -g -std=gnu++11 -o CMakeFiles/server.dir/backend/src/base64.cpp.o -c /home/linz/project/http_chat_room/backend/src/base64.cpp",
+  "file": "/home/linz/project/http_chat_room/backend/src/base64.cpp",
+  "output": "CMakeFiles/server.dir/backend/src/base64.cpp.o"
+},
+{
+  "directory": "/home/linz/project/http_chat_room/build",
+  "command": "/usr/bin/g++  -I/home/linz/project/http_chat_room/backend/include -g -std=gnu++11 -o CMakeFiles/server.dir/backend/utils/logger.cpp.o -c /home/linz/project/http_chat_room/backend/utils/logger.cpp",
+  "file": "/home/linz/project/http_chat_room/backend/utils/logger.cpp",
+  "output": "CMakeFiles/server.dir/backend/utils/logger.cpp.o"
+},
+{
+  "directory": "/home/linz/project/http_chat_room/build",
+  "command": "/usr/bin/g++  -I/home/linz/project/http_chat_room/backend/include -g -std=gnu++11 -o CMakeFiles/server.dir/backend/utils/database.cpp.o -c /home/linz/project/http_chat_room/backend/utils/database.cpp",
+  "file": "/home/linz/project/http_chat_room/backend/utils/database.cpp",
+  "output": "CMakeFiles/server.dir/backend/utils/database.cpp.o"
+}
+]

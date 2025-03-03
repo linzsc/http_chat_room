@@ -48,45 +48,6 @@ struct HttpResponse {
 
 class HttpParser {
 public:
-/*
-    static HttpRequest parseHttpRequest(const std::string& request) {
-        HttpRequest httpRequest;
-        size_t end_header = request.find("\r\n\r\n");
-        
-        if (end_header != std::string::npos) {
-            std::string request_line = request.substr(0, request.find("\r\n"));
-            std::string headers_str = request.substr(request.find("\r\n") + 2, end_header - request.find("\r\n") - 2);
-            httpRequest.body = request.substr(end_header + 4);
-            
-            std::regex request_regex("^(GET|POST|PUT|DELETE|HEAD|OPTIONS|PATCH|TRACE|CONNECT) (\\S+) (HTTP/1\\.\\d)");
-            std::smatch match;
-            if (std::regex_search(request_line, match, request_regex)) {
-                httpRequest.method = strToHttpMethod(match[1]);
-                httpRequest.path = match[2];
-                httpRequest.http_version = match[3];
-            }
-            
-            size_t header_start = 0;
-            while (header_start < headers_str.size()) {
-                size_t header_end = headers_str.find("\r\n", header_start);
-                std::string header;
-                if (header_end == std::string::npos) 
-                    header = headers_str.substr(header_start);
-                else{
-                    header = headers_str.substr(header_start, header_end - header_start);
-                }
-                //std::string header = headers_str.substr(header_start, header_end - header_start);
-                size_t colon_pos = header.find(": ");
-                if (colon_pos != std::string::npos) {
-                    std::cout<<"Header: "<<header.substr(0, colon_pos)<<" Value: "<<header.substr(colon_pos + 2)<<std::endl;
-                    httpRequest.headers[header.substr(0, colon_pos)] = header.substr(colon_pos + 2);
-                }
-                header_start = header_end + 2;
-            }
-        }
-        return httpRequest;
-    }
-    */
     static HttpRequest parseHttpRequest(const std::string &request)
     {
         HttpRequest httpRequest;
@@ -255,6 +216,10 @@ public:
             std::cout << "  " << header.first << ": " << header.second << "\n";
         }
         std::cout << "Body:\n" << response.body << "\n";
+    }
+    static void sendHttpResponse(int fd, HttpStatus status_code,const std::map<std::string, std::string> &headers, const std::string& body) {
+        std::string response = HttpParser::createHttpRequestResponse(status_code, body,headers);
+        send(fd, response.c_str(), response.length(), 0);
     }
 private:
     static HttpMethod strToHttpMethod(const std::string& method) {

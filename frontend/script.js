@@ -69,7 +69,7 @@ async function loginUser() {
 
 
         //获取历史消息记录
-        //getHistoryMessage();
+        getHistoryMessage();
 
         setTimeout(() => {
             connectWebSocket();
@@ -174,4 +174,12 @@ window.onload = () => {
     // 如果需要自动连接WebSocket，可以在这里调用 connectWebSocket()
     //connectWebSocket();
 };
+
+
+window.closed = () => {
+    
+    if (websocket) {
+        websocket.close();
+    }
+}
 

@@ -153,29 +153,29 @@ backend/src/base64.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/backend/src/base64.cpp.s
 .PHONY : backend/src/base64.cpp.s
 
-backend/src/server.o: backend/src/server.cpp.o
-.PHONY : backend/src/server.o
+backend/src/server2.o: backend/src/server2.cpp.o
+.PHONY : backend/src/server2.o
 
 # target to build an object file
-backend/src/server.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/backend/src/server.cpp.o
-.PHONY : backend/src/server.cpp.o
+backend/src/server2.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/backend/src/server2.cpp.o
+.PHONY : backend/src/server2.cpp.o
 
-backend/src/server.i: backend/src/server.cpp.i
-.PHONY : backend/src/server.i
+backend/src/server2.i: backend/src/server2.cpp.i
+.PHONY : backend/src/server2.i
 
 # target to preprocess a source file
-backend/src/server.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/backend/src/server.cpp.i
-.PHONY : backend/src/server.cpp.i
+backend/src/server2.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/backend/src/server2.cpp.i
+.PHONY : backend/src/server2.cpp.i
 
-backend/src/server.s: backend/src/server.cpp.s
-.PHONY : backend/src/server.s
+backend/src/server2.s: backend/src/server2.cpp.s
+.PHONY : backend/src/server2.s
 
 # target to generate assembly for a file
-backend/src/server.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/backend/src/server.cpp.s
-.PHONY : backend/src/server.cpp.s
+backend/src/server2.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/backend/src/server2.cpp.s
+.PHONY : backend/src/server2.cpp.s
 
 backend/src/sha1.o: backend/src/sha1.cpp.o
 .PHONY : backend/src/sha1.o
@@ -261,9 +261,9 @@ help:
 	@echo "... backend/src/base64.o"
 	@echo "... backend/src/base64.i"
 	@echo "... backend/src/base64.s"
-	@echo "... backend/src/server.o"
-	@echo "... backend/src/server.i"
-	@echo "... backend/src/server.s"
+	@echo "... backend/src/server2.o"
+	@echo "... backend/src/server2.i"
+	@echo "... backend/src/server2.s"
 	@echo "... backend/src/sha1.o"
 	@echo "... backend/src/sha1.i"
 	@echo "... backend/src/sha1.s"
