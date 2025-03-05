@@ -153,15 +153,18 @@ void parse_msg(std::string message){
 }
 
 void handleWebSocketMessage(int fd, std::string message) {
-    std::cout << "Received WebSocket message: " << message << std::endl;
+   LOG_DEBUG("Received WebSocket message: "+message+"\nfrom client: "+std::to_string(fd)); 
 
 
     parse_msg(message);
     // 广播消息
     for (auto it = online_members.begin(); it != online_members.end(); ++it) {
         int client_fd = *it;
-        if(client_fd != fd)
+        if(client_fd != fd){
             senWebSocketMessage(fd, message);
+            LOG_DEBUG("Broadcasting message to client: "+std::to_string(client_fd));
+        }
+            
     }
 }
 void handle_options_request(int clientSocket) {
@@ -223,6 +226,10 @@ void handleWebSocketFrame(int fd, const std::string& frame) {
     if (opcode == 0x1) { // 文本帧
         handleWebSocketMessage(fd, payload);
     } else if (opcode == 0x8) { // 关闭帧
+        LOG_INFO("Client " + std::to_string(fd) + " closed the connection.");
+        if(online_members.find(fd) != online_members.end()){
+            online_members.erase(fd);
+        }
         close(fd);
     }
 }
@@ -236,7 +243,7 @@ std::string compute_sec_websocket_accept(const char *sec_websocket_key) {
     // 计算 SHA-1 哈希
     unsigned char hash[20];
     SHA1::SHA1HashBytes((const unsigned char *)key_with_guid, strlen(key_with_guid), hash);
-    std::cout<<"SHA1 hash: "<<hash<<std::endl;
+    //std::cout<<"SHA1 hash: "<<hash<<std::endl;
     // 编码为 Base64
     char encoded[100];  // Base64 编码后的字符串长度会增加
     Base64encode(encoded, (const char *)hash, 20);
@@ -269,9 +276,6 @@ void handleMessageRequest(int fd,HttpMethod method, const std::string& body) {
         
         std::string message=m.MsgtoJsonManual();
         messageJson+=message+",";
-        
-        //LOG_INFO("GET message: "+message);
-        //senWebSocketMessage(fd,message);
     }
     messageJson=messageJson.substr(0,messageJson.size()-1);
     messageJson+="]}";
@@ -391,9 +395,11 @@ void handleClientRead(int fd, uint32_t events)
             }
             else
             {
-                ThreadPool::instance().commit([&]() {
-                    handleWebSocketFrame(fd, ctx.buffer);
-                    ctx.buffer.clear();
+                std::string Message_tmp=ctx.buffer;
+                ctx.buffer.clear();
+                ThreadPool::instance().commit([=]() {
+                    handleWebSocketFrame(fd, Message_tmp);
+                    
                 });
                 
                 break;
@@ -403,8 +409,9 @@ void handleClientRead(int fd, uint32_t events)
 
     if (bytesRead == 0)
     {
-        std::cout << "Client disconnected." << std::endl;
-        std::cout << "FD close!!" << fd << std::endl;
+        LOG_INFO("Client FD:"+std::to_string(fd)+"disconnected.");
+        //std::cout << "Client disconnected." << std::endl;
+        //std::cout << "FD close!!" << fd << std::endl;
         client_contexts.erase(fd);
         if(online_members.find(fd) != online_members.end()){
             online_members.erase(fd);
@@ -414,7 +421,8 @@ void handleClientRead(int fd, uint32_t events)
   
     else if (bytesRead < 0 && errno != EAGAIN && errno != EWOULDBLOCK)
     {
-        std::cerr << "Read error: " << strerror(errno) << std::endl;
+        LOG_ERROR("Read error: " + std::string(strerror(errno)));
+        //std::cerr << "Read error: " << strerror(errno) << std::endl;
         if(online_members.find(fd) != online_members.end()){
             online_members.erase(fd);
         }
@@ -434,8 +442,9 @@ void handleNewConnection(int fd, uint32_t events) {
         return;
     }
 
-    std::cout << "New connection from: " << inet_ntoa(client_addr.sin_addr) << std::endl;
-    std::cout <<"fd : "<<client_fd<<std::endl;
+    //std::cout << "New connection from: " << inet_ntoa(client_addr.sin_addr) << std::endl;
+    LOG_INFO("New connection from: " + std::string(inet_ntoa(client_addr.sin_addr)));
+    LOG_INFO("FD: " + std::to_string(client_fd));
     // 设置客户端连接为非阻塞
     fcntl(client_fd, F_SETFL, O_NONBLOCK);
 
