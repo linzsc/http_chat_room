@@ -83,13 +83,13 @@ void user_login(int fd, std::string ctx_body)
 
         LOG_INFO("Login successful. User name: "+username);
         std::map<std::string, std::string> extraHeaders = {{"Content-Type", "application/json"}};
-        //sendHttpResponse(fd,  HttpStatus::OK, extraHeaders, "{\"success\": true, \"message\": \"Login successful\", "user id: “+“userId"}");
-        sendHttpResponse(fd, HttpStatus::OK, extraHeaders, "{\"success\": true, \"message\": \"Login successful\", \"userId\": \"" + std::to_string(userId) + "\"}");
+       
+        HttpParser::sendHttpResponse(fd, HttpStatus::OK, extraHeaders, "{\"success\": true, \"message\": \"Login successful\", \"userId\": \"" + std::to_string(userId) + "\"}");
     } else {
         std::cerr << "Login failed." << std::endl;
         LOG_ERROR("Login failed. User name:"+username);
         std::map<std::string, std::string> extraHeaders = {{"Content-Type", "text/html"}};
-        sendHttpResponse(fd,  HttpStatus::NOT_FOUND, extraHeaders, "Unauthorized");
+        HttpParser::sendHttpResponse(fd,  HttpStatus::NOT_FOUND, extraHeaders, "Unauthorized");
     }
         
 }

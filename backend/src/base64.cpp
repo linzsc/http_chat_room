@@ -85,7 +85,6 @@
  #include <string.h>
  #include <string>
  #include "base64.h"
- 
  /* aaaack but it's fast and const should make it shared text page. */
  static const unsigned char pr2six[256] =
  {
@@ -207,19 +206,3 @@
      *p++ = '\0';
      return p - encoded;
  }
- std::string compute_sec_websocket_accept(const char *sec_websocket_key) {
-    // 创建一个临时缓冲区，用于拼接 Sec-WebSocket-Key 和 GUID
-    char key_with_guid[256];
-    static const char *ws_guid = "258EAFA5-E914-47DA-95CA-C5AB0DC85B11";
-    snprintf(key_with_guid, sizeof(key_with_guid), "%s%s", sec_websocket_key, ws_guid);
-
-    // 计算 SHA-1 哈希
-    unsigned char hash[20];
-    SHA1::SHA1HashBytes((const unsigned char *)key_with_guid, strlen(key_with_guid), hash);
-    std::cout<<"SHA1 hash: "<<hash<<std::endl;
-    // 编码为 Base64
-    char encoded[100];  // Base64 编码后的字符串长度会增加
-    Base64encode(encoded, (const char *)hash, 20);
-
-    return std::string(encoded);  // 返回动态分配的字符串，调用者负责释放
-}

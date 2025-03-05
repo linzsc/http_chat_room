@@ -235,25 +235,13 @@ void parse_msg(std::string message){
 void handleWebSocketMessage(int fd, std::string message) {
 
 
-    //std::cout << "Received WebSocket message: " << message << std::endl;
     LOG_INFO("Received WebSocket message: "+message);
-    // 广播消息
 
-    //解析数据，并保存到数据库
-    
-    //解析消息
     parse_msg(message);
     
-
-
     for (auto it = online_members.begin(); it != online_members.end(); ++it) {
         int client_fd = *it;
-        //if (client_fd != fd) {
-        //std::cout<<"Sending message to "<<online_fd[client_fd]<<std::endl;
-        //send(client_fd, message.c_str(), message.length(), 0);
-        
         senWebSocketMessage(client_fd, message);
-       
     }
 }
 void handle_options_request(int clientSocket) {
