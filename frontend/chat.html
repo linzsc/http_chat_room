@@ -3,24 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chatroom</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Chat Room</title>
+    <link rel="stylesheet" href="css/chat.css">
 </head>
 <body>
-    <div class="container">
-        <h1>Chatroom</h1>
-        <div class="chat-box">
-            <ul id="messageList"></ul>
-        </div>
-        <div class="message-form">
-            <input type="text" id="messageInput" placeholder="Type your message...">
-            <button onclick="sendMessage()">Send</button>
-        </div>
-        <div class="reconnect">
-            <button onclick="reconnectWebSocket()">Reconnect</button>
+    <div class="chat-container">
+        <ul id="messageList"></ul>
+        <div class="input-area">
+            <input type="text" id="messageInput" placeholder="Type a message...">
+            <button id="sendButton">Send</button>
         </div>
     </div>
 
-    <script src="script.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/chat.js"></script>
 </body>
 </html>

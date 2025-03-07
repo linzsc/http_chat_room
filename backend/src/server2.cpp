@@ -133,13 +133,7 @@ void senWebSocketMessage(int fd, std::string &payload) {
 
 void parse_msg(std::string message){
     SimpleJSONParser msg(message);
-    /*前端消息格式
-
-        sender: clinet_name, // 发送者用户名，确保 username 已定义
-        content: message,
-        timestamp: Date.now()
-    };
-    */
+  
     std::map<std::string, std::string> msg_map=msg.parse();
     //将消息保存到数据库
     MessageDAO messageDAO;
@@ -290,55 +284,60 @@ void onHttp_request(int fd, std::string message) {
         std::string header = message.substr(0, end_header);
         std::string body = message.substr(end_header + 4);
 
-        if (!ctx.is_websocket) {
-            // 解析 HTTP 请求
-            HttpRequest request = HttpParser::parseHttpRequest(message);
-            std::string path = request.path;
-            HttpMethod method = request.method;
+        HttpRequest request = HttpParser::parseHttpRequest(message);
+        std::string path = request.path;
+        HttpMethod method = request.method;
 
-            if (request.headers["Upgrade"] == "websocket") {
-                std::cout << "Upgrade request" << std::endl;
-                // WebSocket 升级请求
-                std::string key = request.headers["Sec-WebSocket-Key"];
-                std::string sec_websocket_accept = compute_sec_websocket_accept(key.c_str());
-                if (sec_websocket_accept.empty()) {
-                    std::cerr << "Failed to compute Sec-WebSocket-Accept" << std::endl;
-                    close(fd);
-                    return;
-                }
-
-                std::map<std::string, std::string> headers = {
-                    {"Upgrade", "websocket"},
-                    {"Connection", "Upgrade"},
-                    {"Sec-WebSocket-Accept", sec_websocket_accept},
-                };
-                std::string response = HttpParser::createHttpRequestResponse_1(HttpStatus::SWITCHING_PROTOCOLS, sec_websocket_accept, "");
-
-                if (send(fd, response.c_str(), response.size(), 0) == -1) {
-                    std::cerr << "Send failed: " << strerror(errno) << std::endl;
-                    close(fd);
-                    return;
-                }
-                ctx.is_websocket = true;
-                online_members.insert(fd);
-                LOG_INFO("WebSocket connection established");
-            } else if(path == "/register"|| path == "/login"){
-                handleAuthRequest(fd, path, method, body);
-            }else if (path == "/getmessage"){
-                handleMessageRequest(fd,method, body);
-            }else{
-                HttpParser::sendHttpResponse(fd,  HttpStatus::OK, {}, "Unauthorized");
+        if (request.headers["Upgrade"] == "websocket")
+        {
+            std::cout << "Upgrade request" << std::endl;
+            // WebSocket 升级请求
+            std::string key = request.headers["Sec-WebSocket-Key"];
+            std::string sec_websocket_accept = compute_sec_websocket_accept(key.c_str());
+            if (sec_websocket_accept.empty())
+            {
+                std::cerr << "Failed to compute Sec-WebSocket-Accept" << std::endl;
+                close(fd);
+                return;
             }
 
-            if (request.headers["Connection"] != "keep-alive"&& request.headers["Connection"] != "keep-alive, Upgrade") {
-                close(fd); // 非保持连接，直接关闭 fd
-            } else {
-                server.modFd(fd, EPOLLIN | EPOLLET); // 保持连接，重置 epoll 监听事件
+            std::map<std::string, std::string> headers = {
+                {"Upgrade", "websocket"},
+                {"Connection", "Upgrade"},
+                {"Sec-WebSocket-Accept", sec_websocket_accept},
+            };
+            std::string response = HttpParser::createHttpRequestResponse_1(HttpStatus::SWITCHING_PROTOCOLS, sec_websocket_accept, "");
+
+            if (send(fd, response.c_str(), response.size(), 0) == -1)
+            {
+                std::cerr << "Send failed: " << strerror(errno) << std::endl;
+                close(fd);
+                return;
             }
-        } else {
-            // WebSocket 消息处理
-            handleWebSocketFrame(fd, ctx.buffer);
-            ctx.buffer.clear(); // 清空缓冲区
+            ctx.is_websocket = true;
+            online_members.insert(fd);
+            LOG_INFO("WebSocket connection established");
+        }
+        else if (path == "/register" || path == "/login")
+        {
+            handleAuthRequest(fd, path, method, body);
+        }
+        else if (path == "/getmessage")
+        {
+            handleMessageRequest(fd, method, body);
+        }
+        else
+        {
+            HttpParser::sendHttpResponse(fd, HttpStatus::OK, {}, "Unauthorized");
+        }
+
+        if (request.headers["Connection"] != "keep-alive" && request.headers["Connection"] != "keep-alive, Upgrade")
+        {
+            close(fd); // 非保持连接，直接关闭 fd
+        }
+        else
+        {
+            server.modFd(fd, EPOLLIN | EPOLLET); // 保持连接，重置 epoll 监听事件
         }
     }
 }

@@ -3,41 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Web Chatroom</title>
-    <link rel="stylesheet" href="styles.css">
-    <style>
-        .hidden {
-            display: none;
-        }
-    </style>
+    <title>Chat App - Login</title>
+    <link rel="stylesheet" href="css/auth.css">
 </head>
 <body>
-    <div class="container">
-        <h1>Welcome to Linz's Chatroom</h1>
-
-        <!-- 登录和注册部分 -->
-        <div id="authForm" class="login-form">
-            <h2>Register</h2>
-            <input type="text" id="registerUsername" placeholder="Username">
-            <input type="password" id="registerPassword" placeholder="Password">
-            <button onclick="registerUser()">Register</button>
-
-            <h2>Login</h2>
-            <input type="text" id="loginUsername" placeholder="Username">
-            <input type="password" id="loginPassword" placeholder="Password">
-            <button onclick="loginUser()">Login</button>
+    <div class="auth-container">
+        <h1>Chat App</h1>
+        <div class="input-group">
+            <input type="text" id="username" placeholder="Username">
         </div>
-
-        <!-- 聊天部分 -->
-        <div id="chatBox" class="chat-box hidden">
-            <ul id="messageList"></ul>
-            <div class="message-form">
-                <input type="text" id="messageInput" placeholder="Type your message...">
-                <button onclick="sendMessage()">Send</button>
-            </div>
+        <div class="input-group">
+            <input type="password" id="password" placeholder="Password">
+        </div>
+        <div class="button-group">
+            <button class="login-btn">Login</button>
+            <button class="register-btn">Register</button>
         </div>
     </div>
 
-    <script src="script.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/auth.js"></script>
 </body>
 </html>
