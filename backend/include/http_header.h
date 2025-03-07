@@ -1,3 +1,4 @@
+#pragma once
 #ifndef HTTP_HEADER_H
 #define HTTP_HEADER_H
 
@@ -7,17 +8,13 @@
 #include <map>
 #include <unordered_map>
 #include "logger.h"
+#include <sys/socket.h>
 enum class HttpStatus {
     OK = 200,
     NOT_FOUND = 404,
     SWITCHING_PROTOCOLS = 101,
 };
-std::map<HttpStatus, std::string> status_phrase_map = {
-    {HttpStatus::OK, "OK"},
-    {HttpStatus::NOT_FOUND, "Not Found"},
-    {HttpStatus::SWITCHING_PROTOCOLS, "Switching Protocols"}
-};
-
+extern std::map<HttpStatus, std::string> status_phrase_map ;
 enum class HttpMethod {
     UNKNOWN = -1,
     GET,
@@ -92,6 +89,9 @@ public:
                 }
                 header_start = header_end + 2;
             }
+        }
+        else{
+            httpRequest.method = HttpMethod::UNKNOWN;
         }
         return httpRequest;
     }
@@ -181,20 +181,7 @@ public:
         //LOG_INFO("createHttpRequestResponse_1:\n"+response_stream.str());
         return response_stream.str();
     }
-    /*
-    static std::string createHttpResponse(HttpStatus status, const std::string& content_type, const std::string& body) {
-        std::ostringstream response_stream;
-        response_stream << "HTTP/1.1 " << static_cast<int>(status) << " \r\n";
-        response_stream << "Content-Type: " << content_type << "\r\n";
-        response_stream << "Access-Control-Allow-Origin: *\r\n"
-                           "Access-Control-Allow-Methods: POST, GET, OPTIONS\r\n"
-                           "Access-Control-Allow-Headers: *\r\n";
-                           
-        response_stream << "Content-Length: " << body.length() << "\r\n\r\n";
-        response_stream << body;
-        return response_stream.str();
-    }
-    */
+ 
     static void printHttpRequest(const HttpRequest& request) {
         std::cout << "HTTP Request:\n";
         std::cout << "Method: " << static_cast<int>(request.method) << "\n";
@@ -233,4 +220,20 @@ private:
     }
 };
 
+
+class HttpHandler {
+    public:
+        virtual ~HttpHandler() = default;
+        virtual void handleRequest(int fd, const HttpRequest& req) = 0;
+        
+        static std::unique_ptr<HttpHandler> create();
+        
+    protected:
+        enum class AuthType { LOGIN, REGISTER };
+        
+        // 工具方法
+        virtual std::string computeWebSocketAccept(const std::string& key) = 0;
+        virtual bool isWebSocketUpgrade(const HttpRequest& req) const = 0;
+    };
+    
 #endif // HTTP_HEADER_H

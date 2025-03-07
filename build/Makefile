@@ -153,6 +153,102 @@ backend/src/base64.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/backend/src/base64.cpp.s
 .PHONY : backend/src/base64.cpp.s
 
+backend/src/global.o: backend/src/global.cpp.o
+.PHONY : backend/src/global.o
+
+# target to build an object file
+backend/src/global.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/backend/src/global.cpp.o
+.PHONY : backend/src/global.cpp.o
+
+backend/src/global.i: backend/src/global.cpp.i
+.PHONY : backend/src/global.i
+
+# target to preprocess a source file
+backend/src/global.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/backend/src/global.cpp.i
+.PHONY : backend/src/global.cpp.i
+
+backend/src/global.s: backend/src/global.cpp.s
+.PHONY : backend/src/global.s
+
+# target to generate assembly for a file
+backend/src/global.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/backend/src/global.cpp.s
+.PHONY : backend/src/global.cpp.s
+
+backend/src/http_handler.o: backend/src/http_handler.cpp.o
+.PHONY : backend/src/http_handler.o
+
+# target to build an object file
+backend/src/http_handler.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/backend/src/http_handler.cpp.o
+.PHONY : backend/src/http_handler.cpp.o
+
+backend/src/http_handler.i: backend/src/http_handler.cpp.i
+.PHONY : backend/src/http_handler.i
+
+# target to preprocess a source file
+backend/src/http_handler.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/backend/src/http_handler.cpp.i
+.PHONY : backend/src/http_handler.cpp.i
+
+backend/src/http_handler.s: backend/src/http_handler.cpp.s
+.PHONY : backend/src/http_handler.s
+
+# target to generate assembly for a file
+backend/src/http_handler.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/backend/src/http_handler.cpp.s
+.PHONY : backend/src/http_handler.cpp.s
+
+backend/src/message.o: backend/src/message.cpp.o
+.PHONY : backend/src/message.o
+
+# target to build an object file
+backend/src/message.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/backend/src/message.cpp.o
+.PHONY : backend/src/message.cpp.o
+
+backend/src/message.i: backend/src/message.cpp.i
+.PHONY : backend/src/message.i
+
+# target to preprocess a source file
+backend/src/message.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/backend/src/message.cpp.i
+.PHONY : backend/src/message.cpp.i
+
+backend/src/message.s: backend/src/message.cpp.s
+.PHONY : backend/src/message.s
+
+# target to generate assembly for a file
+backend/src/message.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/backend/src/message.cpp.s
+.PHONY : backend/src/message.cpp.s
+
+backend/src/router.o: backend/src/router.cpp.o
+.PHONY : backend/src/router.o
+
+# target to build an object file
+backend/src/router.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/backend/src/router.cpp.o
+.PHONY : backend/src/router.cpp.o
+
+backend/src/router.i: backend/src/router.cpp.i
+.PHONY : backend/src/router.i
+
+# target to preprocess a source file
+backend/src/router.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/backend/src/router.cpp.i
+.PHONY : backend/src/router.cpp.i
+
+backend/src/router.s: backend/src/router.cpp.s
+.PHONY : backend/src/router.s
+
+# target to generate assembly for a file
+backend/src/router.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/backend/src/router.cpp.s
+.PHONY : backend/src/router.cpp.s
+
 backend/src/server2.o: backend/src/server2.cpp.o
 .PHONY : backend/src/server2.o
 
@@ -261,6 +357,18 @@ help:
 	@echo "... backend/src/base64.o"
 	@echo "... backend/src/base64.i"
 	@echo "... backend/src/base64.s"
+	@echo "... backend/src/global.o"
+	@echo "... backend/src/global.i"
+	@echo "... backend/src/global.s"
+	@echo "... backend/src/http_handler.o"
+	@echo "... backend/src/http_handler.i"
+	@echo "... backend/src/http_handler.s"
+	@echo "... backend/src/message.o"
+	@echo "... backend/src/message.i"
+	@echo "... backend/src/message.s"
+	@echo "... backend/src/router.o"
+	@echo "... backend/src/router.i"
+	@echo "... backend/src/router.s"
 	@echo "... backend/src/server2.o"
 	@echo "... backend/src/server2.i"
 	@echo "... backend/src/server2.s"

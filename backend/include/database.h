@@ -1,3 +1,4 @@
+#pragma once
 #include <mysql/mysql.h>
 #include <queue>
 #include <mutex>

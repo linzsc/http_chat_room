@@ -21,7 +21,7 @@
 
 // 定义回调函数类型
 
-std::set<int>online_members;
+//std::set<int>online_members;
 std::mutex context_mutex; // 全局互斥锁
 
 EpollReactor server;

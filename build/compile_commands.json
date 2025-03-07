@@ -1,9 +1,33 @@
 [
 {
   "directory": "/home/linz/project/http_chat_room/build",
+  "command": "/usr/bin/g++  -I/home/linz/project/http_chat_room/backend/include -g -std=gnu++11 -o CMakeFiles/server.dir/backend/src/global.cpp.o -c /home/linz/project/http_chat_room/backend/src/global.cpp",
+  "file": "/home/linz/project/http_chat_room/backend/src/global.cpp",
+  "output": "CMakeFiles/server.dir/backend/src/global.cpp.o"
+},
+{
+  "directory": "/home/linz/project/http_chat_room/build",
   "command": "/usr/bin/g++  -I/home/linz/project/http_chat_room/backend/include -g -std=gnu++11 -o CMakeFiles/server.dir/backend/src/server2.cpp.o -c /home/linz/project/http_chat_room/backend/src/server2.cpp",
   "file": "/home/linz/project/http_chat_room/backend/src/server2.cpp",
   "output": "CMakeFiles/server.dir/backend/src/server2.cpp.o"
+},
+{
+  "directory": "/home/linz/project/http_chat_room/build",
+  "command": "/usr/bin/g++  -I/home/linz/project/http_chat_room/backend/include -g -std=gnu++11 -o CMakeFiles/server.dir/backend/src/http_handler.cpp.o -c /home/linz/project/http_chat_room/backend/src/http_handler.cpp",
+  "file": "/home/linz/project/http_chat_room/backend/src/http_handler.cpp",
+  "output": "CMakeFiles/server.dir/backend/src/http_handler.cpp.o"
+},
+{
+  "directory": "/home/linz/project/http_chat_room/build",
+  "command": "/usr/bin/g++  -I/home/linz/project/http_chat_room/backend/include -g -std=gnu++11 -o CMakeFiles/server.dir/backend/src/router.cpp.o -c /home/linz/project/http_chat_room/backend/src/router.cpp",
+  "file": "/home/linz/project/http_chat_room/backend/src/router.cpp",
+  "output": "CMakeFiles/server.dir/backend/src/router.cpp.o"
+},
+{
+  "directory": "/home/linz/project/http_chat_room/build",
+  "command": "/usr/bin/g++  -I/home/linz/project/http_chat_room/backend/include -g -std=gnu++11 -o CMakeFiles/server.dir/backend/src/message.cpp.o -c /home/linz/project/http_chat_room/backend/src/message.cpp",
+  "file": "/home/linz/project/http_chat_room/backend/src/message.cpp",
+  "output": "CMakeFiles/server.dir/backend/src/message.cpp.o"
 },
 {
   "directory": "/home/linz/project/http_chat_room/build",

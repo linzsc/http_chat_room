@@ -1,9 +1,11 @@
+#pragma once
 #include <sys/epoll.h>
 #include <iostream>
 #include <map>
 #include <functional>
 #include <cstring>
 #include "thread_poor.h"
+#include <unordered_map>
 #define MAX_EVENTS 1000
 typedef void (*CallbackFunction)(int fd, uint32_t events);
 
