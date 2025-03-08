@@ -1,6 +1,8 @@
 file(REMOVE_RECURSE
   "CMakeFiles/server.dir/backend/src/base64.cpp.o"
   "CMakeFiles/server.dir/backend/src/base64.cpp.o.d"
+  "CMakeFiles/server.dir/backend/src/config.cpp.o"
+  "CMakeFiles/server.dir/backend/src/config.cpp.o.d"
   "CMakeFiles/server.dir/backend/src/global.cpp.o"
   "CMakeFiles/server.dir/backend/src/global.cpp.o.d"
   "CMakeFiles/server.dir/backend/src/http_handler.cpp.o"

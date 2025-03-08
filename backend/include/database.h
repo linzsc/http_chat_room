@@ -6,6 +6,7 @@
 #include "logger.h"
 #include "string.h"
 #include <thread>
+#include "config.h"
 class MySQLConnPool{
 public:
     static MySQLConnPool &getInstance()
@@ -77,9 +78,17 @@ private:
 
     MYSQL *createNewConnection()
     {
+
         MYSQL *conn = mysql_init(nullptr);
-        if (!mysql_real_connect(conn, "localhost", "chat_user", "linzsc@30",
-                                "chat_system", 3306, nullptr, 0))
+        auto& cfg = Config::getInstance();
+        std::string host = cfg.getStr("database", "host", "localhost");
+        int port = cfg.getInt("database", "port", 3306);
+        std::string dbname = cfg.getStr("database", "name", "chat_system");
+        std::string user = cfg.getStr("database", "user", "chat_user");
+        std::string pass = cfg.getStr("database", "password", "");
+
+        if (!mysql_real_connect(conn, host.c_str(), user.c_str(), pass.c_str(),
+                                dbname.c_str(), port, nullptr, 0))
         {
             LOG_ERROR("Connection failed: " + std::string(mysql_error(conn)));
             mysql_close(conn);

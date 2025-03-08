@@ -15,7 +15,6 @@
 #include "message.h"
 #include "simple_json.h"
 #include "database.h"
-#define PORT 12345
 #define BUFF_SIZE 1024
 
  

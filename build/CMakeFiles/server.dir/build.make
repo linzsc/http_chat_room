@@ -83,10 +83,24 @@ CMakeFiles/server.dir/backend/src/global.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/server.dir/backend/src/global.cpp.s"
 	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/linz/project/http_chat_room/backend/src/global.cpp -o CMakeFiles/server.dir/backend/src/global.cpp.s
 
+CMakeFiles/server.dir/backend/src/config.cpp.o: CMakeFiles/server.dir/flags.make
+CMakeFiles/server.dir/backend/src/config.cpp.o: /home/linz/project/http_chat_room/backend/src/config.cpp
+CMakeFiles/server.dir/backend/src/config.cpp.o: CMakeFiles/server.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/linz/project/http_chat_room/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/server.dir/backend/src/config.cpp.o"
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/server.dir/backend/src/config.cpp.o -MF CMakeFiles/server.dir/backend/src/config.cpp.o.d -o CMakeFiles/server.dir/backend/src/config.cpp.o -c /home/linz/project/http_chat_room/backend/src/config.cpp
+
+CMakeFiles/server.dir/backend/src/config.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/server.dir/backend/src/config.cpp.i"
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/linz/project/http_chat_room/backend/src/config.cpp > CMakeFiles/server.dir/backend/src/config.cpp.i
+
+CMakeFiles/server.dir/backend/src/config.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/server.dir/backend/src/config.cpp.s"
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/linz/project/http_chat_room/backend/src/config.cpp -o CMakeFiles/server.dir/backend/src/config.cpp.s
+
 CMakeFiles/server.dir/backend/src/server2.cpp.o: CMakeFiles/server.dir/flags.make
 CMakeFiles/server.dir/backend/src/server2.cpp.o: /home/linz/project/http_chat_room/backend/src/server2.cpp
 CMakeFiles/server.dir/backend/src/server2.cpp.o: CMakeFiles/server.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/linz/project/http_chat_room/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/server.dir/backend/src/server2.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/linz/project/http_chat_room/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/server.dir/backend/src/server2.cpp.o"
 	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/server.dir/backend/src/server2.cpp.o -MF CMakeFiles/server.dir/backend/src/server2.cpp.o.d -o CMakeFiles/server.dir/backend/src/server2.cpp.o -c /home/linz/project/http_chat_room/backend/src/server2.cpp
 
 CMakeFiles/server.dir/backend/src/server2.cpp.i: cmake_force
@@ -100,7 +114,7 @@ CMakeFiles/server.dir/backend/src/server2.cpp.s: cmake_force
 CMakeFiles/server.dir/backend/src/http_handler.cpp.o: CMakeFiles/server.dir/flags.make
 CMakeFiles/server.dir/backend/src/http_handler.cpp.o: /home/linz/project/http_chat_room/backend/src/http_handler.cpp
 CMakeFiles/server.dir/backend/src/http_handler.cpp.o: CMakeFiles/server.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/linz/project/http_chat_room/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/server.dir/backend/src/http_handler.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/linz/project/http_chat_room/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/server.dir/backend/src/http_handler.cpp.o"
 	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/server.dir/backend/src/http_handler.cpp.o -MF CMakeFiles/server.dir/backend/src/http_handler.cpp.o.d -o CMakeFiles/server.dir/backend/src/http_handler.cpp.o -c /home/linz/project/http_chat_room/backend/src/http_handler.cpp
 
 CMakeFiles/server.dir/backend/src/http_handler.cpp.i: cmake_force
@@ -114,7 +128,7 @@ CMakeFiles/server.dir/backend/src/http_handler.cpp.s: cmake_force
 CMakeFiles/server.dir/backend/src/router.cpp.o: CMakeFiles/server.dir/flags.make
 CMakeFiles/server.dir/backend/src/router.cpp.o: /home/linz/project/http_chat_room/backend/src/router.cpp
 CMakeFiles/server.dir/backend/src/router.cpp.o: CMakeFiles/server.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/linz/project/http_chat_room/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/server.dir/backend/src/router.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/linz/project/http_chat_room/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/server.dir/backend/src/router.cpp.o"
 	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/server.dir/backend/src/router.cpp.o -MF CMakeFiles/server.dir/backend/src/router.cpp.o.d -o CMakeFiles/server.dir/backend/src/router.cpp.o -c /home/linz/project/http_chat_room/backend/src/router.cpp
 
 CMakeFiles/server.dir/backend/src/router.cpp.i: cmake_force
@@ -128,7 +142,7 @@ CMakeFiles/server.dir/backend/src/router.cpp.s: cmake_force
 CMakeFiles/server.dir/backend/src/message.cpp.o: CMakeFiles/server.dir/flags.make
 CMakeFiles/server.dir/backend/src/message.cpp.o: /home/linz/project/http_chat_room/backend/src/message.cpp
 CMakeFiles/server.dir/backend/src/message.cpp.o: CMakeFiles/server.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/linz/project/http_chat_room/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/server.dir/backend/src/message.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/linz/project/http_chat_room/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/server.dir/backend/src/message.cpp.o"
 	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/server.dir/backend/src/message.cpp.o -MF CMakeFiles/server.dir/backend/src/message.cpp.o.d -o CMakeFiles/server.dir/backend/src/message.cpp.o -c /home/linz/project/http_chat_room/backend/src/message.cpp
 
 CMakeFiles/server.dir/backend/src/message.cpp.i: cmake_force
@@ -142,7 +156,7 @@ CMakeFiles/server.dir/backend/src/message.cpp.s: cmake_force
 CMakeFiles/server.dir/backend/src/sha1.cpp.o: CMakeFiles/server.dir/flags.make
 CMakeFiles/server.dir/backend/src/sha1.cpp.o: /home/linz/project/http_chat_room/backend/src/sha1.cpp
 CMakeFiles/server.dir/backend/src/sha1.cpp.o: CMakeFiles/server.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/linz/project/http_chat_room/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/server.dir/backend/src/sha1.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/linz/project/http_chat_room/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/server.dir/backend/src/sha1.cpp.o"
 	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/server.dir/backend/src/sha1.cpp.o -MF CMakeFiles/server.dir/backend/src/sha1.cpp.o.d -o CMakeFiles/server.dir/backend/src/sha1.cpp.o -c /home/linz/project/http_chat_room/backend/src/sha1.cpp
 
 CMakeFiles/server.dir/backend/src/sha1.cpp.i: cmake_force
@@ -156,7 +170,7 @@ CMakeFiles/server.dir/backend/src/sha1.cpp.s: cmake_force
 CMakeFiles/server.dir/backend/src/base64.cpp.o: CMakeFiles/server.dir/flags.make
 CMakeFiles/server.dir/backend/src/base64.cpp.o: /home/linz/project/http_chat_room/backend/src/base64.cpp
 CMakeFiles/server.dir/backend/src/base64.cpp.o: CMakeFiles/server.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/linz/project/http_chat_room/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/server.dir/backend/src/base64.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/linz/project/http_chat_room/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/server.dir/backend/src/base64.cpp.o"
 	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/server.dir/backend/src/base64.cpp.o -MF CMakeFiles/server.dir/backend/src/base64.cpp.o.d -o CMakeFiles/server.dir/backend/src/base64.cpp.o -c /home/linz/project/http_chat_room/backend/src/base64.cpp
 
 CMakeFiles/server.dir/backend/src/base64.cpp.i: cmake_force
@@ -170,7 +184,7 @@ CMakeFiles/server.dir/backend/src/base64.cpp.s: cmake_force
 CMakeFiles/server.dir/backend/utils/logger.cpp.o: CMakeFiles/server.dir/flags.make
 CMakeFiles/server.dir/backend/utils/logger.cpp.o: /home/linz/project/http_chat_room/backend/utils/logger.cpp
 CMakeFiles/server.dir/backend/utils/logger.cpp.o: CMakeFiles/server.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/linz/project/http_chat_room/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/server.dir/backend/utils/logger.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/linz/project/http_chat_room/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/server.dir/backend/utils/logger.cpp.o"
 	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/server.dir/backend/utils/logger.cpp.o -MF CMakeFiles/server.dir/backend/utils/logger.cpp.o.d -o CMakeFiles/server.dir/backend/utils/logger.cpp.o -c /home/linz/project/http_chat_room/backend/utils/logger.cpp
 
 CMakeFiles/server.dir/backend/utils/logger.cpp.i: cmake_force
@@ -184,7 +198,7 @@ CMakeFiles/server.dir/backend/utils/logger.cpp.s: cmake_force
 CMakeFiles/server.dir/backend/utils/database.cpp.o: CMakeFiles/server.dir/flags.make
 CMakeFiles/server.dir/backend/utils/database.cpp.o: /home/linz/project/http_chat_room/backend/utils/database.cpp
 CMakeFiles/server.dir/backend/utils/database.cpp.o: CMakeFiles/server.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/linz/project/http_chat_room/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/server.dir/backend/utils/database.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/linz/project/http_chat_room/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/server.dir/backend/utils/database.cpp.o"
 	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/server.dir/backend/utils/database.cpp.o -MF CMakeFiles/server.dir/backend/utils/database.cpp.o.d -o CMakeFiles/server.dir/backend/utils/database.cpp.o -c /home/linz/project/http_chat_room/backend/utils/database.cpp
 
 CMakeFiles/server.dir/backend/utils/database.cpp.i: cmake_force
@@ -198,6 +212,7 @@ CMakeFiles/server.dir/backend/utils/database.cpp.s: cmake_force
 # Object files for target server
 server_OBJECTS = \
 "CMakeFiles/server.dir/backend/src/global.cpp.o" \
+"CMakeFiles/server.dir/backend/src/config.cpp.o" \
 "CMakeFiles/server.dir/backend/src/server2.cpp.o" \
 "CMakeFiles/server.dir/backend/src/http_handler.cpp.o" \
 "CMakeFiles/server.dir/backend/src/router.cpp.o" \
@@ -211,6 +226,7 @@ server_OBJECTS = \
 server_EXTERNAL_OBJECTS =
 
 server: CMakeFiles/server.dir/backend/src/global.cpp.o
+server: CMakeFiles/server.dir/backend/src/config.cpp.o
 server: CMakeFiles/server.dir/backend/src/server2.cpp.o
 server: CMakeFiles/server.dir/backend/src/http_handler.cpp.o
 server: CMakeFiles/server.dir/backend/src/router.cpp.o
@@ -221,7 +237,7 @@ server: CMakeFiles/server.dir/backend/utils/logger.cpp.o
 server: CMakeFiles/server.dir/backend/utils/database.cpp.o
 server: CMakeFiles/server.dir/build.make
 server: CMakeFiles/server.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/linz/project/http_chat_room/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Linking CXX executable server"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/linz/project/http_chat_room/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Linking CXX executable server"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/server.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

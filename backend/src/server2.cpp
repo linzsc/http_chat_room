@@ -10,7 +10,7 @@
 #include "http_handler.h"
 #include "message.h"
 #include "http_header.h"
-
+#include "config.h"
 /*
 前端先发送 注册、登录http请求，
 但后端核实身份信息后，返回成功的响应
@@ -22,16 +22,7 @@
 根据message中的type字段，选择群发和私聊
 
 */
-#define PORT 12345
 
-// 定义回调函数类型
-//std::set<int>online_members;
-
-// 定义客户端上下文
-
-
-
-// 发送 HTTP 响应
 Router router;
 
 void initRoutes() {
@@ -43,8 +34,8 @@ void initRoutes() {
     router.registerHttpRoute("OPTIONS", "*", handleOptions);  // OPTIONS 可以不区分 path
 
     // WebSocket 消息路由注册，根据 JSON 中 type 字段
-    router.registerMessageRoute("1", handleBroadcastMessage);
-    router.registerMessageRoute("2", handlePrivateMessage);
+    router.registerMessageRoute("1", handleBroadcastMessage);//广播消息 
+    router.registerMessageRoute("2", handlePrivateMessage);//私聊
 }
 
 
@@ -185,8 +176,6 @@ void handleClientRead(int fd, uint32_t events)
     if (bytesRead == 0)
     {
         LOG_INFO("Client FD:"+std::to_string(fd)+"disconnected.");
-        //std::cout << "Client disconnected." << std::endl;
-        //std::cout << "FD close!!" << fd << std::endl;
         client_contexts.erase(fd);
         if(online_members.find(fd) != online_members.end()){
             online_members.erase(fd);
@@ -197,7 +186,7 @@ void handleClientRead(int fd, uint32_t events)
     else if (bytesRead < 0 && errno != EAGAIN && errno != EWOULDBLOCK)
     {
         LOG_ERROR("Read error: " + std::string(strerror(errno)));
-        //std::cerr << "Read error: " << strerror(errno) << std::endl;
+        
         if(online_members.find(fd) != online_members.end()){
             online_members.erase(fd);
         }
@@ -217,7 +206,7 @@ void handleNewConnection(int fd, uint32_t events) {
         return;
     }
 
-    //std::cout << "New connection from: " << inet_ntoa(client_addr.sin_addr) << std::endl;
+    
     LOG_INFO("New connection from: " + std::string(inet_ntoa(client_addr.sin_addr)));
     LOG_INFO("FD: " + std::to_string(client_fd));
     // 设置客户端连接为非阻塞
@@ -245,17 +234,23 @@ void handleStdin(int fd, uint32_t events) {
 }
 
 int main() {
+
+    if (!Config::getInstance().load("config.ini")) {
+        LOG_ERROR("Failed to load configuration");
+        return 1;
+    }
+
     initRoutes();
     if (!server.init()) {
         return 1;
     }
+
     ThreadPool::instance(std::thread::hardware_concurrency() * 20 );
 
     // 创建监听套接字
     int server_fd = socket(AF_INET, SOCK_STREAM, 0);
     if (server_fd == -1) {
         LOG_ERROR("Socket创建失败");
-        //std::cerr << "Socket creation failed: " << strerror(errno) << std::endl;
         return 1;
     }
 
@@ -266,7 +261,8 @@ int main() {
         close(server_fd);
         return 0;
     }
-
+    //获取发口号
+    int PORT = Config::getInstance().getInt("server", "port", 12345);
     // 设置服务器地址
     struct sockaddr_in server_addr;
     server_addr.sin_family = AF_INET;
@@ -276,17 +272,14 @@ int main() {
     // 绑定和监听
     if (bind(server_fd, (struct sockaddr*)&server_addr, sizeof(server_addr)) == -1) {
         LOG_ERROR("绑定失败!");
-        //std::cerr << "Bind failed: " << strerror(errno) << std::endl;
         return 1;
     }
 
     if (listen(server_fd, 5) == -1) {
         LOG_ERROR("监听失败!");
-        //std::cerr << "Listen failed: " << strerror(errno) << std::endl;
         return 1;
     }
     LOG_INFO("Server listening on port:");
-    //std::cout << "Server listening on port 12345" << std::endl;
 
     // 设置服务器套接字为非阻塞
     fcntl(server_fd, F_SETFL, O_NONBLOCK);

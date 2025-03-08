@@ -153,6 +153,30 @@ backend/src/base64.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/backend/src/base64.cpp.s
 .PHONY : backend/src/base64.cpp.s
 
+backend/src/config.o: backend/src/config.cpp.o
+.PHONY : backend/src/config.o
+
+# target to build an object file
+backend/src/config.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/backend/src/config.cpp.o
+.PHONY : backend/src/config.cpp.o
+
+backend/src/config.i: backend/src/config.cpp.i
+.PHONY : backend/src/config.i
+
+# target to preprocess a source file
+backend/src/config.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/backend/src/config.cpp.i
+.PHONY : backend/src/config.cpp.i
+
+backend/src/config.s: backend/src/config.cpp.s
+.PHONY : backend/src/config.s
+
+# target to generate assembly for a file
+backend/src/config.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/backend/src/config.cpp.s
+.PHONY : backend/src/config.cpp.s
+
 backend/src/global.o: backend/src/global.cpp.o
 .PHONY : backend/src/global.o
 
@@ -357,6 +381,9 @@ help:
 	@echo "... backend/src/base64.o"
 	@echo "... backend/src/base64.i"
 	@echo "... backend/src/base64.s"
+	@echo "... backend/src/config.o"
+	@echo "... backend/src/config.i"
+	@echo "... backend/src/config.s"
 	@echo "... backend/src/global.o"
 	@echo "... backend/src/global.i"
 	@echo "... backend/src/global.s"
